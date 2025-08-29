@@ -10,6 +10,7 @@ Simbel & DobbyLiu: Fountain Recreation
 https://github.com/darkplace-dr/Dark-Place/blob/c89c553ebcaad44738c9d5373b1b583ff2df79ed/scripts/world/cutscenes/fountain1.lua#L4
 
 Toby Fox/Temmie Chang: Sprites
+
 Fred Woods, Marcy Nabors, Alex Rosetti, Mortis Ghost: Sprites Assistance
 
 
