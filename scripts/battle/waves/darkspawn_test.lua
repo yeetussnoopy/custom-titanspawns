@@ -37,9 +37,9 @@ function Basic:onStart()
     self.timer:everyInstant(self:getEnemyRatio(), function()
         local tempdir = Utils.random(360);
         local tempdist = 150 + Utils.random(50);
-        local selection = { { "default", false, 2.25, "darkspawn" }, { "default", true, 3, "darkspawn" } }
+        local selection = { { "evolving", false, 2.25, "darkspawn" }, { "default", true, 3, "darkspawn" } }
 
-        if self.difficulty >= 2 then
+        if self.difficulty >= 3 then
             table.insert(selection, { "mine", true, 2.25, "blown_bullet" })
         end
         local list = Utils.pick(selection)

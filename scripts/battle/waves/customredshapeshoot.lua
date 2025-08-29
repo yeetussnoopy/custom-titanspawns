@@ -2,6 +2,7 @@ local Basic, super = Class(Wave)
 function Basic:init()
     super:init(self)
     self.time = 15
+    self.difficulty = Game.battle.encounter.difficulty or 3
 end
 
 function Basic:lengthdir_x(len, dir)
@@ -29,22 +30,23 @@ function Basic:onStart()
 
     attacker:setColor(COLORS.red)
 
+    if self.difficulty >= 2 then
+        self.timer:everyInstant(7 / 3, function()
+            local tempdir = Utils.random(360);
+            local tempdist = 150 + Utils.random(50);
+            local list = Utils.pick({ { "desperate", false, 3 }, { "desperate", true, 3 } })
 
-  self.timer:everyInstant(7 / 3, function()
-        local tempdir = Utils.random(360);
-        local tempdist = 150 + Utils.random(50);
-        local list = Utils.pick({ { "desperate", false, 3 }, { "desperate", true, 3 } })
 
 
+            local arena = Game.battle.arena
+            local spawn = self:spawnBullet("darkspawn", arena.x + self:lengthdir_x(tempdist, tempdir),
+                arena.y + self:lengthdir_y(tempdist, tempdir), list[1])
+            spawn.max_speed = list[3]
+            spawn.slow_track = list[2]
 
-        local arena = Game.battle.arena
-        local spawn = self:spawnBullet("darkspawn", arena.x + self:lengthdir_x(tempdist, tempdir),
-            arena.y + self:lengthdir_y(tempdist, tempdir), list[1])
-        spawn.max_speed = list[3]
-        spawn.slow_track = list[2]
-
-        spawn.remove_offscreen = false
-    end)
+            spawn.remove_offscreen = false
+        end)
+    end
 
     -- Every 0.33 seconds...
     self.timer:everyInstant(12 / 3, function()
@@ -67,14 +69,12 @@ function Basic:onStart()
             spawn.max_speed = 9
             spawn.skip_spawn = true
             spawn.speed_max_multiplier = 0.8
-            self.timer:tween(0.4, attacker, { scale_y = 2 }, "in-quad", function ()
-                    attacker:setAnimation("idle_desperate")
-
+            self.timer:tween(0.4, attacker, { scale_y = 2 }, "in-quad", function()
+                attacker:setAnimation("idle_desperate")
             end)
         end)
     end)
 end
-
 
 function Basic:getEnemyRatio()
     local enemies = #Game.battle:getActiveEnemies()
@@ -87,8 +87,6 @@ function Basic:getEnemyRatio()
     end
 end
 
-
-
 function Basic:update()
     -- Code here gets called every frame
 
@@ -96,7 +94,7 @@ function Basic:update()
 end
 
 function Basic:onEnd()
-   local attacker = Game.battle.enemies[1]
+    local attacker = Game.battle.enemies[1]
     --Assets.playSound("motor_swing_down")
 
     local afterimage = Game.battle:addChild(AfterImage(attacker.sprite, 1, 0.1))

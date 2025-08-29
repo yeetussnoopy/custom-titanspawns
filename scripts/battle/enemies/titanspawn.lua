@@ -27,7 +27,7 @@ function TitanSpawn:init()
         "* You hear your heart beating in your ears.",
         "* When did you start being yourself?",
         "* It sputtered in a voice like crushed glass.",
-       -- "* Ralsei mutters to himself to stay calm.",
+        -- "* Ralsei mutters to himself to stay calm.",
         "* Smells like adrenaline."
     }
 
@@ -41,41 +41,50 @@ function TitanSpawn:init()
     self.tired_percentage = -1
     self.can_freeze = false
 end
+
 function TitanSpawn:getGrazeTension()
     return 0
 end
-
-
-
-
 
 function TitanSpawn:update()
     super.update(self)
     if (Game.battle.state == "MENUSELECT") and (Game.tension >= 64) then
         self.t_siner = self.t_siner + (1 * DTMULT)
         if Game.battle.menu_items[3] then
-        if Game.battle.menu_items[3].name == "Banish" then
-            Game.battle.menu_items[3].color =
-                function()
-                    return (Utils.mergeColor(COLORS.yellow, COLORS.white, 0.5 + (math.sin(self.t_siner / 4) * 0.5)))
-                end
+            if Game.battle.menu_items[3].name == "Banish" then
+                Game.battle.menu_items[3].color =
+                    function()
+                        return (Utils.mergeColor(COLORS.yellow, COLORS.white, 0.5 + (math.sin(self.t_siner / 4) * 0.5)))
+                    end
+            end
         end
-    end
     end
 end
 
 function TitanSpawn:isXActionShort(battler)
     return true
 end
+
 function TitanSpawn:hurt(amount, battler, on_defeat, color, show_status, attacked)
     if battler.chara:checkWeapon("blackshard") or battler.chara:checkWeapon("twistedswd") then
         amount = amount * 10
     end
     super.hurt(self, amount, battler, on_defeat, color, show_status, attacked)
 end
+
+function TitanSpawn:originalHurt()
+    if self.sprite.sprite == "titanspawn_original_idle/spr_titan_spawn_idle" then
+        self:toggleOverlay(true)
+        self.overlay_sprite:setSprite("titanspawn_original_idle/spr_titan_spawn_hurt")
+    end
+end
+
 function TitanSpawn:onHurt(damage, battler)
     super:onHurt(self)
+    self:originalHurt()
+
     Assets.playSound("snd_spawn_weaker")
+
 
     self.sprite:addFX(ShaderFX("wave", {
         ["wave_sine"] = function() return Kristal.getTime() * 30 end,
@@ -145,12 +154,12 @@ function TitanSpawn:onAct(battler, name)
             battler:flash()
             cutscene:playSound("revival")
 
-                        cutscene:playSound("snd_great_shine", 1, 1.2)
+            cutscene:playSound("snd_great_shine", 1, 1.2)
 
             local bx, by = Game.battle:getSoulLocation()
 
             local soul = Game.battle:addChild(purifyevent(bx + 20, by + 10))
-            soul.color = Game:getPartyMember(Game.party[1].id).soul_color or {1,0,0}            
+            soul.color = Game:getPartyMember(Game.party[1].id).soul_color or { 1, 0, 0 }
             soul.layer = 501
             --  soul.graphics.fade = 0.20
             --soul.graphics.fade_to = 0
@@ -234,12 +243,15 @@ function TitanSpawn:onAct(battler, name)
 end
 
 function TitanSpawn:onDefeat(damage, battler)
-    if self.exit_on_defeat then
-        Game:addFlag("slain", 1)
-        self:onDefeatFatal()
-         self:recruitMessage("slain")
-    else
-        self.sprite:setAnimation("defeat")
+    self:onDefeatFatal()
+end
+
+function TitanSpawn:onDefeatFatal(damage, battler)
+    super.onDefeatFatal(self, damage, battler)
+    Game:addFlag("slain", 1)
+    self:recruitMessage("slain")
+    if self.sprite.sprite == "titanspawn_original_idle/spr_titan_spawn_idle" then
+        self:setSprite("titanspawn_original_idle/spr_titan_spawn_hurt")
     end
 end
 

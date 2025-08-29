@@ -16,8 +16,9 @@ function actor:init()
     self.default = "idle_desperate"
 
     self.animations = {
-        ["idle_desperate"] = {"spr_darkshape_desperate_animated", 0.25, true},
-        ["idle_evolving"] = {"spr_darkshape_evolving_animated", 0.25, true},
+        ["idle_desperate"] = { "spr_darkshape_desperate_animated", 0.25, true },
+        ["idle_evolving"] = { "spr_darkshape_evolving_animated", 0.25, true },
+        ["idle_default"] = { "titanspawn_original_idle/spr_titan_spawn_idle", 0.25, true },
     }
 end
 
