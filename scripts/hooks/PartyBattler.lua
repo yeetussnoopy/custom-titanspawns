@@ -1,7 +1,6 @@
 local PartyBattler, super = Class(PartyBattler)
 
 function PartyBattler:hurt(amount, exact, color, options)
-            Assets.playSound("bell")
 
   if self.chara:checkArmor("shadowmantle") then
         amount = amount * 0.5
