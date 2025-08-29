@@ -1,4 +1,4 @@
-# Custom recreation 
+# Custom titanspawns  
 
 Custom titanspawns. Made less as a faithful recreation and more as a private endeavor to make custom titanspawn attacks. 
 Functionally accurate for the most part, but a lot of things aren't 100% visually accurate 
