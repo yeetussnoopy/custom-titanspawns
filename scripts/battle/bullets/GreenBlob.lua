@@ -1,0 +1,63 @@
+local TPBlob, super = Class(Bullet)
+
+function TPBlob:init(x, y)
+    super.init(self, x, y, "effects/spr_darkshape_transform")
+
+
+    self:setColor(COLORS.white)
+    self.image_speed = 0.5;
+    self.size = 2;
+    self.damage = 90;
+    self.prime_speed = 4;
+    self.max_speed = 5;
+    self.acc = 20;
+    self.active_move = false
+
+    self.sprite:play(1 / 15, true)
+
+    self.grazed = true
+    self.layer = BATTLE_LAYERS["top"]
+    self.tension_amount = 1
+    self:setScale(1, 1)
+end
+
+function TPBlob:onAdd(parent)
+    super.onAdd(self, parent)
+
+
+    Assets.playSound("noise")
+
+
+    self.physics.direction = Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y) + math.rad(180)
+    self.physics.speed = self.prime_speed
+
+
+    Game.battle.timer:tween(20 / 30, self, { scale_x = 0.4, scale_y = 0.4, color = { 1, 1, 0 } }, "linear", function()
+        self.active_move = true
+    end)
+end
+
+function TPBlob:update()
+    --Kristal.Console:log("timer: "..tostring(self.wave.timer))
+    self.physics.speed = self.physics.speed * 0.85;
+    if self.active_move then
+        local accel = self.acc / Utils.dist(self.x, self.y, Game.battle.soul.x + 10, Game.battle.soul.y + 10);
+        self.physics.direction = Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y);
+        self.physics.speed = Utils.approach(self.physics.speed, self.max_speed, accel)
+    end
+
+    --[[if (Utils.dist(self.x, self.y, Game.battle.soul.x + 10, Game.battle.soul.y + 10) <= 20 and self.active_move) then
+        self:remove()
+    end]]
+
+    super.update(self)
+end
+
+function TPBlob:onCollide()
+    Assets.playSound("swallow", self.size * 0.2)
+    Assets.playSound("snd_eye_telegraph", self.size * 0.2, 2)
+    Game:giveTension(self.tension_amount)
+    self:remove()
+end
+
+return TPBlob

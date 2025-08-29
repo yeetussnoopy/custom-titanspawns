@@ -1,0 +1,97 @@
+local Basic, super = Class(Wave)
+function Basic:init()
+    super:init(self)
+    self.time = 20
+end
+
+function Basic:lengthdir_x(len, dir)
+    return len * math.cos(dir)
+end
+
+function Basic:lengthdir_y(len, dir)
+    return len * math.sin(dir)
+end
+
+function Basic:onStart()
+    Game.battle.soul.toggle = true
+
+    local sound = Assets.playSound("snd_spawn_attack")
+    sound:setLooping(true)
+
+
+    local attacker = Game.battle.enemies[1]
+    --Assets.playSound("motor_swing_down")
+    Assets.playSound("boost", 1, 0.5)
+
+    local afterimage = Game.battle:addChild(AfterImage(attacker.sprite, 1, 0.1))
+    afterimage.layer = Game.battle.tension_bar.layer + 1
+    afterimage:addFX(ColorMaskFX({ 1, 0, 0 }, 1))
+
+    attacker:setColor(COLORS.red)
+
+
+  self.timer:everyInstant(7 / 3, function()
+        local tempdir = Utils.random(360);
+        local tempdist = 150 + Utils.random(50);
+        local list = Utils.pick({ { "desperate", false, 3 }, { "desperate", true, 3 } })
+
+
+
+        local arena = Game.battle.arena
+        local spawn = self:spawnBullet("darkspawn", arena.x + self:lengthdir_x(tempdist, tempdir),
+            arena.y + self:lengthdir_y(tempdist, tempdir), list[1])
+        spawn.max_speed = list[3]
+        spawn.yeetus_mode = list[2]
+
+        spawn.remove_offscreen = false
+    end)
+
+    -- Every 0.33 seconds...
+    self.timer:everyInstant(15 / 3, function()
+        local tempdir = Utils.random(360);
+        local tempdist = 150 + Utils.random(50);
+
+        local arena = Game.battle.arena
+
+        local x, y = attacker:getRelativePos(attacker.width / 2, attacker.height / 2)
+
+
+
+        self.timer:tween(0.4, attacker, { scale_y = 3 }, "out-quad", function()
+            Assets.playSound("snd_spawn_weaker", 1, 1.8)
+            attacker:setSprite("spr_darkshape_desperate_animated_1")
+            attacker:shake(3)
+            local spawn = self:spawnBullet("redshape", x, y)
+            spawn.physics.direction = Utils.angle(self.x, self.y, Game.battle.soul.x + 10, Game.battle.soul.y + 10)
+            spawn.sprite.rotation = spawn.physics.direction
+            spawn.max_speed = 8
+            spawn.skip_spawn = true
+            spawn.speed_max_multiplier = 0.8
+            self.timer:tween(0.4, attacker, { scale_y = 2 }, "in-quad", function ()
+                    attacker:setAnimation("idle_desperate")
+
+            end)
+        end)
+    end)
+end
+
+function Basic:update()
+    -- Code here gets called every frame
+
+    super.update(self)
+end
+
+function Basic:onEnd()
+   local attacker = Game.battle.enemies[1]
+    --Assets.playSound("motor_swing_down")
+
+    local afterimage = Game.battle:addChild(AfterImage(attacker.sprite, 1, 0.1))
+    afterimage.layer = Game.battle.tension_bar.layer + 1
+    afterimage:addFX(ColorMaskFX({ 1, 0, 0 }, 1))
+
+    attacker:setColor(COLORS.white)
+
+    Assets.stopSound("snd_spawn_attack")
+end
+
+return Basic
