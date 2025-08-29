@@ -23,6 +23,7 @@ https://github.com/darkplace-dr/Dark-Place/blob/c89c553ebcaad44738c9d5373b1b583f
 - Adjustable bullet properties
 - Custom bullet patterns
 - Custom combo attacks
+- Custom slain text on kill 
   
 ## Things I may add
 - TP Bar Flash/Sparkles
