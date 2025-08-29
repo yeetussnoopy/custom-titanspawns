@@ -4,10 +4,14 @@ Custom titanspawns. Made less as a faithful recreation and more as a private end
 Functionally accurate for the most part, but a lot of things aren't 100% visually accurate. If you want pure accuracy, this library is not for you.
 
 ## Credits
-Autumn64: Mine Sprites
+Autumn64: Mine Sprites/Bug Testing
 
 Simbel & DobbyLiu: Fountain Recreation
 https://github.com/darkplace-dr/Dark-Place/blob/c89c553ebcaad44738c9d5373b1b583ff2df79ed/scripts/world/cutscenes/fountain1.lua#L4
+
+Toby Fox/Temmie Chang: Sprites
+Fred Woods, Marcy Nabors, Alex Rosetti, Mortis Ghost: Sprites Assistance
+
 
 ## Features
 
