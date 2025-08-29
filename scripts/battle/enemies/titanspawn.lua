@@ -40,6 +40,8 @@ function TitanSpawn:init()
 
     self.tired_percentage = -1
     self.can_freeze = false
+
+    self.toggle_slain_message = true
 end
 
 function TitanSpawn:getGrazeTension()
@@ -249,7 +251,9 @@ end
 function TitanSpawn:onDefeatFatal(damage, battler)
     super.onDefeatFatal(self, damage, battler)
     Game:addFlag("slain", 1)
+    if self.toggle_slain_message then
     self:recruitMessage("slain")
+    end
     if self.sprite.sprite == "titanspawn_original_idle/spr_titan_spawn_idle" then
         self:setSprite("titanspawn_original_idle/spr_titan_spawn_hurt")
     end

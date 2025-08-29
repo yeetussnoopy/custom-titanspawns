@@ -21,8 +21,9 @@ https://github.com/darkplace-dr/Dark-Place/blob/c89c553ebcaad44738c9d5373b1b583f
 - Banish (Purified Cutscene)
 - Glow Brighter
 - Adjustable bullet properties
-- Custom bullet patterns
-- Custom combo attacks
+- An example encounter
+- Custom bullet patterns and combination attacks
+- Gradual difficulty increases as the fight goes on
 - Custom slain text on kill 
   
 ## Things I may add
