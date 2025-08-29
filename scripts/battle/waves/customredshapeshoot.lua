@@ -1,7 +1,7 @@
 local Basic, super = Class(Wave)
 function Basic:init()
     super:init(self)
-    self.time = 20
+    self.time = 15
 end
 
 function Basic:lengthdir_x(len, dir)
@@ -47,7 +47,7 @@ function Basic:onStart()
     end)
 
     -- Every 0.33 seconds...
-    self.timer:everyInstant(15 / 3, function()
+    self.timer:everyInstant(12 / 3, function()
         local tempdir = Utils.random(360);
         local tempdist = 150 + Utils.random(50);
 
@@ -64,7 +64,7 @@ function Basic:onStart()
             local spawn = self:spawnBullet("redshape", x, y)
             spawn.physics.direction = Utils.angle(self.x, self.y, Game.battle.soul.x + 10, Game.battle.soul.y + 10)
             spawn.sprite.rotation = spawn.physics.direction
-            spawn.max_speed = 8
+            spawn.max_speed = 9
             spawn.skip_spawn = true
             spawn.speed_max_multiplier = 0.8
             self.timer:tween(0.4, attacker, { scale_y = 2 }, "in-quad", function ()
@@ -74,6 +74,20 @@ function Basic:onStart()
         end)
     end)
 end
+
+
+function Basic:getEnemyRatio()
+    local enemies = #Game.battle:getActiveEnemies()
+    if enemies <= 1 then
+        return 12 / 3
+    elseif enemies == 2 then
+        return 15 / 3
+    elseif enemies >= 3 then
+        return 15 / 3
+    end
+end
+
+
 
 function Basic:update()
     -- Code here gets called every frame
