@@ -1,13 +1,6 @@
 local lib = {}
 
 function lib:init()
-   Utils.hook(PartyBattler, "hurt", function(orig, self, amount, exact, color, options)
-      if self.chara:checkArmor("shadowmantle") then
-         amount = amount * 0.5
-      end
-		orig(self, amount, exact, color, options)
-	end)
-
    
 end
 function lib:postInit(new_file)

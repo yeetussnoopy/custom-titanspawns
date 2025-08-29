@@ -11,7 +11,7 @@ https://github.com/darkplace-dr/Dark-Place/blob/c89c553ebcaad44738c9d5373b1b583f
 ## Features
 
 - Slain and Purified Counts
-- Accounts for Shadowmantle/TwistedSword/BlackShard 
+- Accounts for TwistedSword/BlackShard extra damage
 - Darkshapes
 - The TP Blobs
 - Redshapes 
