@@ -77,7 +77,7 @@ function DarkSpace:init(x, y, sprite)
 
     self.shakeme = true
 
-    self.yeetus_mode = true
+    self.slow_track = true
 
     self.inaccurate_distance_calculation_variable = Game.battle.encounter.light_size
 
@@ -178,7 +178,7 @@ function DarkSpace:update()
     self.true_timer = self.true_timer + (1 * DTMULT)
 
     if self.toggle_active then
-        if self.yeetus_mode then
+        if self.slow_track then
             self.physics.direction = Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y);
             self.physics.speed = self.speed_calc
         else
@@ -247,13 +247,7 @@ function DarkSpace:draw()
 
 
 
-
-
-
-
     love.graphics.setColor(1, 1, 1, self.image_alpha)
-
-
 
     love.graphics.setColor(1, 1, 1, self.alpha)
 

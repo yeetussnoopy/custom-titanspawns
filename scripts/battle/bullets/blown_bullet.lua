@@ -84,7 +84,7 @@ function blown_bullet:init(x, y, sprite)
 
     self.shakeme = true
 
-    self.yeetus_mode = true
+    self.slow_track = true
 
     self.inaccurate_distance_calculation_variable = Game.battle.encounter.light_size
 
@@ -251,7 +251,7 @@ function blown_bullet:update()
 
 
     if self.toggle_active and self.tracking_val2 ~= 0 then
-        if self.yeetus_mode then
+        if self.slow_track then
             self.physics.direction = Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y);
             self.physics.speed = self.speed_calc
         else

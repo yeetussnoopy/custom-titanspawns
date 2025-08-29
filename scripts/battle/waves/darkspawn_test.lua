@@ -48,7 +48,7 @@ function Basic:onStart()
         local spawn = self:spawnBullet(list[4], arena.x + self:lengthdir_x(tempdist, tempdir),
             arena.y + self:lengthdir_y(tempdist, tempdir), list[1])
         spawn.max_speed = list[3]
-        spawn.yeetus_mode = list[2]
+        spawn.slow_track = list[2]
         spawn.tension_amount = 2
 
         spawn.remove_offscreen = false

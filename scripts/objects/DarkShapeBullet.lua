@@ -53,7 +53,7 @@ function DarkShapeBullet:init(x, y, texture)
 
     self.shakeme = true
 
-    self.yeetus_mode = true
+    self.slow_track = true
 
     self.inaccurate_distance_calculation_variable = Game.battle.encounter.light_size or 43
 
@@ -66,7 +66,6 @@ function DarkShapeBullet:update()
         bullet:setScale(0, 0)
         self:remove()
     end
-
 
     if self.fast_timer then
         self.timer_track = self.timer_track + self.fastval
