@@ -1,6 +1,6 @@
 local RedShoot, super = Class(Wave)
 function RedShoot:init()
-    super:init(self)
+    super.init(self)
     self.time = 15
     self.difficulty = Game.battle.encounter.difficulty or 3
 end

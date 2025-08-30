@@ -1,7 +1,7 @@
 local TitanSpawn, super = Class(EnemyBattler)
 
 function TitanSpawn:init()
-    super:init(self)
+    super.init(self)
 
     self.name = "Titan Spawn"
     self:setActor("titanspawn")
@@ -82,7 +82,7 @@ function TitanSpawn:originalHurt()
 end
 
 function TitanSpawn:onHurt(damage, battler)
-    super:onHurt(self)
+    super.onHurt(self)
     self:originalHurt()
 
     Assets.playSound("snd_spawn_weaker")
