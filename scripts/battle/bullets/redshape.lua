@@ -41,7 +41,7 @@ function RedShape:init(x, y)
     self.max_speed = 2.25 * 1.5
     self.speed_max_multiplier = 1;
 
-    self.inaccurate_distance_calculation_variable = 48
+    self.inaccurate_distance_calculation_variable = Game.battle.soul.radius_goal
 
     self.alpha = 0
     self.toggle_active = false

@@ -79,7 +79,7 @@ function DarkSpace:init(x, y, sprite)
 
     self.slow_track = true
 
-    self.inaccurate_distance_calculation_variable = Game.battle.encounter.light_size
+    self.inaccurate_distance_calculation_variable = Game.battle.soul.radius_goal
 
     self.tension_amount = 1
 end

@@ -5,7 +5,7 @@ function Soul:init(x, y, color)
     self.timer = 0
     self.radius = 0
     self.toggle = false
-    self.radius_goal = Game.battle.encounter.light_size
+    self.radius_goal = Game.battle.encounter.light_size or 48
 end
 
 

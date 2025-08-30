@@ -86,7 +86,7 @@ function blown_bullet:init(x, y, sprite)
 
     self.slow_track = true
 
-    self.inaccurate_distance_calculation_variable = Game.battle.encounter.light_size
+    self.inaccurate_distance_calculation_variable = Game.battle.soul.radius_goal
 
 
     self.tracking_val2 = 1

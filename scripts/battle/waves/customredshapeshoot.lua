@@ -1,19 +1,19 @@
-local Basic, super = Class(Wave)
-function Basic:init()
+local RedShoot, super = Class(Wave)
+function RedShoot:init()
     super:init(self)
     self.time = 15
     self.difficulty = Game.battle.encounter.difficulty or 3
 end
 
-function Basic:lengthdir_x(len, dir)
+function RedShoot:lengthdir_x(len, dir)
     return len * math.cos(dir)
 end
 
-function Basic:lengthdir_y(len, dir)
+function RedShoot:lengthdir_y(len, dir)
     return len * math.sin(dir)
 end
 
-function Basic:onStart()
+function RedShoot:onStart()
     Game.battle.soul.toggle = true
 
     local sound = Assets.playSound("snd_spawn_attack")
@@ -76,7 +76,7 @@ function Basic:onStart()
     end)
 end
 
-function Basic:getEnemyRatio()
+function RedShoot:getEnemyRatio()
     local enemies = #Game.battle:getActiveEnemies()
     if enemies <= 1 then
         return 12 / 3
@@ -87,13 +87,13 @@ function Basic:getEnemyRatio()
     end
 end
 
-function Basic:update()
+function RedShoot:update()
     -- Code here gets called every frame
 
     super.update(self)
 end
 
-function Basic:onEnd()
+function RedShoot:onEnd()
     local attacker = Game.battle.enemies[1]
     --Assets.playSound("motor_swing_down")
 
@@ -106,4 +106,4 @@ function Basic:onEnd()
     Assets.stopSound("snd_spawn_attack")
 end
 
-return Basic
+return RedShoot
