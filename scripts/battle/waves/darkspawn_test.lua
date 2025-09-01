@@ -21,7 +21,7 @@ function SpawnTest:onStart()
     sound:setLooping(true)
 
 
-    if self.difficulty >= 2 then
+    if self.difficulty >= 3 then
         self.timer:everyInstant(15 / 3, function()
             local tempdir = Utils.random(360);
             local tempdist = 150 + Utils.random(50);
@@ -39,7 +39,7 @@ function SpawnTest:onStart()
         local tempdist = 150 + Utils.random(50);
         local selection = { { "evolving", false, 2.25, "darkspawn" }, { "default", true, 3, "darkspawn" } }
 
-        if self.difficulty >= 3 then
+        if self.difficulty >= 2 then
             table.insert(selection, { "mine", true, 2.25, "blown_bullet" })
         end
         local list = Utils.pick(selection)
