@@ -16,7 +16,7 @@ function TensionBarGlow:update()
     if math.abs(self.apparent - Game.tension) < 20 then
         self.apparent = Game.tension
     elseif self.apparent < Game.tension then
-        self.apparent = self.apparent + (20 * DTMULT) 
+        self.apparent = self.apparent + (20 * DTMULT)
     elseif self.apparent > Game.tension then
         self.apparent = self.apparent - (20 * DTMULT)
     end
@@ -25,12 +25,11 @@ function TensionBarGlow:update()
     if self.alphamod <= 0 then
         self:remove()
     end
-
 end
 
 function TensionBarGlow:draw()
     local xx = 0
-    local yy = 0 
+    local yy = 0
     local z = 1
 
     Draw.setColor(1, 1, 1, 1)
@@ -40,37 +39,37 @@ function TensionBarGlow:draw()
 
     local tplogo = Game.battle.tension_bar.tp_text
 
-        local alpha = (1 - (1 * 0.25)) * self.alphamod
+    local alpha = (1 - (1 * 0.25)) * self.alphamod
 
-        Draw.draw(tplogo,  - 30 - (z), 30, 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(-z, 0, alpha)
+    Draw.draw(tplogo, -30 - (z), 30, 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(-z, 0, alpha)
 
-        Draw.draw(tplogo,  - 30 + (z), 30, 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(z, 0, alpha)
+    Draw.draw(tplogo, -30 + (z), 30, 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(z, 0, alpha)
 
-        Draw.draw(tplogo,  - 30, (30) - (z), 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(0, -z, alpha)
+    Draw.draw(tplogo, -30, (30) - (z), 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(0, -z, alpha)
 
-        Draw.draw(tplogo,  - 30, 30 + (z), 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(0, z, alpha)
+    Draw.draw(tplogo, -30, 30 + (z), 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(0, z, alpha)
 
-        Draw.draw(tplogo,  - 30 - (z), (30) - (z), 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(-z, -z, alpha)
+    Draw.draw(tplogo, -30 - (z), (30) - (z), 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(-z, -z, alpha)
 
-        Draw.draw(tplogo,  - 30 + (z), (30) - (z), 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(z, -z, alpha)
+    Draw.draw(tplogo, -30 + (z), (30) - (z), 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(z, -z, alpha)
 
-        Draw.draw(tplogo,  - 30 - (z),  30 + (z), 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(-z, z, alpha)
+    Draw.draw(tplogo, -30 - (z), 30 + (z), 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(-z, z, alpha)
 
-        Draw.draw(tplogo,  - 30 + (z), 30 + (z), 0, 1, 1, 0, 0, alpha)
-        self:draw_w_offset(z, z, alpha)
-    
+    Draw.draw(tplogo, -30 + (z), 30 + (z), 0, 1, 1, 0, 0, alpha)
+    self:draw_w_offset(z, z, alpha)
+
     love.graphics.setBlendMode("alpha")
 
 
     Draw.setColor(1, 1, 1, 0.75 * self.alphamod)
-    Draw.draw(Game.battle.tension_bar.tp_bar_fill , xx, 0, 0, 1, 1)
+    Draw.draw(Game.battle.tension_bar.tp_bar_fill, xx, 0, 0, 1, 1)
 
     super.draw(self)
 end
@@ -88,7 +87,7 @@ function TensionBarGlow:draw_w_offset(dx, dy, alpha)
 
     if Game.tension < 100 then
         love.graphics.print(tostring(Game.tension), (xx - 30) + dx, yy + 70 + dy)
-        love.graphics.print("%", - 25 + dx, 95 + dy)
+        love.graphics.print("%", -25 + dx, 95 + dy)
     else
         love.graphics.print("M", (xx - 28) + dx, yy + 70 + dy)
         love.graphics.print("A", (xx - 24) + dx, yy + 90 + dy)
