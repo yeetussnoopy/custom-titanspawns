@@ -68,15 +68,11 @@ function TitanSpawn:isXActionShort(battler)
     return true
 end
 
-function TitanSpawn:getAttackDamage(damage, battler, points)
-    if damage > 0 then
-        return damage
-    end
-    local dmg = ((battler.chara:getStat("attack") * points) / 20) - (self.defense * 3)
+function TitanSpawn:hurt(amount, battler, on_defeat, color, show_status, attacked)
     if battler.chara:checkWeapon("blackshard") or battler.chara:checkWeapon("twistedswd") then
-        dmg = dmg * 10
+        amount = amount * 10
     end
-    return dmg
+    super.hurt(self, amount, battler, on_defeat, color, show_status, attacked)
 end
 
 function TitanSpawn:originalHurt()

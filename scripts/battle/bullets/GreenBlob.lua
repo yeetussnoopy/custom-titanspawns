@@ -72,8 +72,6 @@ function TPBlob:flashsparestars()
 
         local star = bar:addChild(Sprite("effects/spare/star", x, y))
         star:setOrigin(0.5, 0.5)
-        --star:setScale(2, 2)
-
         local dur = 10 + love.math.random(0, 5)
 
         star:play(5/dur)
