@@ -20,8 +20,7 @@ function TitanSpawn:init()
         "darkspawn_test",
     }
 
-    self.check = { "AT 30 DF 200\nA shard of fear. Appears in places of deep dark.",
-        "Expose it to LIGHT... and gather COURAGE to gain TP.", "Then, \"[color:yellow]BANISH[color:reset]\" it!" }
+    --self.check = { "AT 30 DF 200\nA shard of fear. Appears in places of deep dark.", "Expose it to LIGHT... and gather COURAGE to gain TP.", "Then, \"[color:yellow]BANISH[color:reset]\" it!" }
 
     self.text = {
         "* You hear your heart beating in your ears.",
@@ -33,7 +32,9 @@ function TitanSpawn:init()
 
     self:registerAct("Brighten", "Powerup\nlight", "all", 4)
 
-    self:registerAct("Banish", "Defeat\nEnemy", nil, 64)
+    self.banish_amt =  64
+
+    self:registerAct("Banish", "Defeat\nEnemy", nil,  self.banish_amt)
 
     self.dialogue_override = nil
     self.t_siner = 0
@@ -50,7 +51,7 @@ end
 
 function TitanSpawn:update()
     super.update(self)
-    if (Game.battle.state == "MENUSELECT") and (Game.tension >= 64) then
+    if (Game.battle.state == "MENUSELECT") and (Game.tension >=  self.banish_amt) then
         self.t_siner = self.t_siner + (1 * DTMULT)
         if Game.battle.menu_items[3] then
             if Game.battle.menu_items[3].name == "Banish" then
@@ -67,11 +68,15 @@ function TitanSpawn:isXActionShort(battler)
     return true
 end
 
-function TitanSpawn:hurt(amount, battler, on_defeat, color, show_status, attacked)
-    if battler.chara:checkWeapon("blackshard") or battler.chara:checkWeapon("twistedswd") then
-        amount = amount * 10
+function TitanSpawn:getAttackDamage(damage, battler, points)
+    if damage > 0 then
+        return damage
     end
-    super.hurt(self, amount, battler, on_defeat, color, show_status, attacked)
+    local dmg = ((battler.chara:getStat("attack") * points) / 20) - (self.defense * 3)
+    if battler.chara:checkWeapon("blackshard") or battler.chara:checkWeapon("twistedswd") then
+        dmg = dmg * 10
+    end
+    return dmg
 end
 
 function TitanSpawn:originalHurt()
@@ -114,7 +119,7 @@ function TitanSpawn:onTurnEnd()
 end
 
 function TitanSpawn:getEncounterText()
-    if (Game.tension >= 64) then
+    if (Game.tension >=  self.banish_amt) then
         return "* The atmosphere feels tense...\n* (You can use [color:yellow]BANISH[color:reset]!)"
     end
     return super.getEncounterText(self)
@@ -128,6 +133,7 @@ function TitanSpawn:onShortAct(battler, name)
 end
 
 function TitanSpawn:onAct(battler, name)
+    
     if name == "Brighten" then
         battler:flash()
         Game.battle.timer:after(7 / 30, function()
@@ -225,13 +231,6 @@ function TitanSpawn:onAct(battler, name)
             Game.battle.encounter.purified = true
         end)
 
-
-
-
-
-
-        --Game.battle:finishActionBy(battler)
-
         return
     elseif name == "Standard" then
         Game.battle:startActCutscene(function(cutscene)
@@ -240,12 +239,23 @@ function TitanSpawn:onAct(battler, name)
                 " tried to \"[color:yellow]ACT[color:reset]\"...\n* But, the enemy couldn't understand!")
         end)
         return
+
+    elseif name == "Check" then
+        if Game:getTension() >= self.banish_amt then
+            return {"* TITAN SPAWN - AT 30 DEF 200\n* A shard of fear. Appears in\nplaces of deep dark.", "* The atmosphere feels tense...\n* (You can use \"[color:yellow]BANISH[color:reset]\"!)"}
+        else
+            return { "* TITAN SPAWN - AT 30 DF 200\n* A shard of fear. Appears in\nplaces of deep dark.", "Expose it to LIGHT... and gather COURAGE to gain TP.", "Then, \"[color:yellow]BANISH[color:reset]\" it!" }
     end
+end
     return super:onAct(self, battler, name)
 end
 
 function TitanSpawn:onDefeat(damage, battler)
     self:onDefeatFatal()
+end
+
+function TitanSpawn:getSpareText(battler, success)
+    return "* But, it was not something that\ncan understand MERCY."
 end
 
 function TitanSpawn:onDefeatFatal(damage, battler)

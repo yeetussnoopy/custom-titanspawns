@@ -56,8 +56,40 @@ end
 function TPBlob:onCollide()
     Assets.playSound("swallow", self.size * 0.2)
     Assets.playSound("snd_eye_telegraph", self.size * 0.2, 2)
+    self:flashsparestars()
+    Game.battle.tension_bar:addChild(TensionBarGlow())
     Game:giveTension(self.tension_amount)
+
     self:remove()
 end
+
+function TPBlob:flashsparestars()
+    for i = 1, (3 + love.math.random(0, 2)) do
+        local bar = Game.battle.tension_bar
+
+        local x = love.math.random(0, 25)
+        local y = 40 + love.math.random(0, 160)
+
+        local star = bar:addChild(Sprite("effects/spare/star", x, y))
+        star:setOrigin(0.5, 0.5)
+        --star:setScale(2, 2)
+
+        local dur = 10 + love.math.random(0, 5)
+
+        star:play(5/dur)
+        star.layer = 999
+        star.alpha = 1
+
+        star.physics = {
+            speed = 3 + love.math.random() * 3,
+            direction = -math.rad(90)
+        }
+        Game.battle.timer:tween(dur / 30, star.physics, { speed = 0 }, "linear")
+        Game.battle.timer:tween(dur / 30, star, { alpha = 0.25 }, "linear", function()
+            star:remove()
+        end)
+    end
+end
+
 
 return TPBlob
