@@ -27,11 +27,10 @@ Toby Fox/Temmie Chang: Sprites
 - Custom bullet patterns and combination attacks
 - Gradual difficulty increases as the fight goes on
 - Custom slain text on kill 
-  
-## Things I may add
 - TP Bar Flash/Sparkles
-- Various graphical effects
-
+- Various graphical effects 
+- GenericParticle ported in
+  
 ## Things I won't add
 - Reviver Acts
 - Shadow Mantle Damage Reduction 

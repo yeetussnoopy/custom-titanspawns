@@ -59,8 +59,26 @@ function TPBlob:onCollide()
     self:flashsparestars()
     Game.battle.tension_bar:addChild(TensionBarGlow())
     Game:giveTension(self.tension_amount)
-
+    self:finishexplosion()
     self:remove()
+end
+
+function TPBlob:finishexplosion()
+    local boom_sprite = Sprite("effects/spr_finisher_explosion", self.x, self.y)
+    boom_sprite:setOrigin(0.5, 0.5)
+    boom_sprite:setScale(0.0625, 0.0625)
+    boom_sprite:setFrame(3)
+    Game.battle.timer:tween(4/30, boom_sprite, {scale_x = 0.0625 * 3, scale_y = 0.0625 * 3})
+    boom_sprite.layer = self.layer  +1
+    boom_sprite:setColor(COLORS.yellow)
+    boom_sprite:play(1 / 30, false, function()
+        boom_sprite:remove()
+    end)
+    Game.battle:addChild(boom_sprite)
+    --[[Game.battle.timer:after(5/30, function ()
+        boom_sprite:remove()
+    end)]]
+
 end
 
 function TPBlob:flashsparestars()
@@ -74,7 +92,7 @@ function TPBlob:flashsparestars()
         star:setOrigin(0.5, 0.5)
         local dur = 10 + love.math.random(0, 5)
 
-        star:play(5/dur)
+        star:play(5 / dur)
         star.layer = 999
         star.alpha = 1
 
@@ -88,6 +106,5 @@ function TPBlob:flashsparestars()
         end)
     end
 end
-
 
 return TPBlob
