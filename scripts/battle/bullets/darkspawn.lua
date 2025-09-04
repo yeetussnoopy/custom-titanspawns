@@ -167,7 +167,7 @@ function DarkSpace:update()
             0.15 * self.speedfactor * self.speed_max_multiplier);
         self.image_size = 1
 
-        if Utils.random(0, 1) > 0.5 then
+        if love.math.random(1, 3) == 1 then
             local particle = Game.battle:addChild(GenericParticle(self.x + Utils.random(-12, 12), self.y + Utils.random(-12, 12)))
             particle.layer = self.layer + 2
             particle:setColor({ 1, 1, 1 }) -- c_white
