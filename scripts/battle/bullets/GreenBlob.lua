@@ -17,7 +17,9 @@ function TPBlob:init(x, y)
 
     self.grazed = true
     self.layer = BATTLE_LAYERS["top"]
-    self.tension_amount = 1
+    self.tension_amount = 1.6
+
+    self.enable_tension_double = false 
     self:setScale(1, 1)
 end
 
@@ -58,6 +60,9 @@ function TPBlob:onCollide()
     Assets.playSound("snd_eye_telegraph", self.size * 0.2, 2)
     self:flashsparestars()
     Game.battle.tension_bar:addChild(TensionBarGlow())
+    if self.enable_tension_double and Game.battle.turn_count >= 4 then
+        self.tension_amount = self.tension_amount * 2
+    end
     Game:giveTension(self.tension_amount)
     self:finishexplosion()
     self:remove()

@@ -22,19 +22,24 @@ function TitanSpawn:init()
 
     --self.check = { "AT 30 DF 200\nA shard of fear. Appears in places of deep dark.", "Expose it to LIGHT... and gather COURAGE to gain TP.", "Then, \"[color:yellow]BANISH[color:reset]\" it!" }
 
+
     self.text = {
         "* You hear your heart beating in your ears.",
         "* When did you start being yourself?",
         "* It sputtered in a voice like crushed glass.",
-        -- "* Ralsei mutters to himself to stay calm.",
-        "* Smells like adrenaline."
+        "* Smells like adrenaline.",
+        --"* There's a heart beating where your soul should be!"
     }
+
+    if Game:hasPartyMember("ralsei") then
+        table.insert(self.text, "* Ralsei mutters to himself to stay calm.")
+    end
 
     self:registerAct("Brighten", "Powerup\nlight", "all", 4)
 
-    self.banish_amt =  64
+    self.banish_amt = 64
 
-    self:registerAct("Banish", "Defeat\nEnemy", nil,  self.banish_amt)
+    self:registerAct("Banish", "Defeat\nEnemy", nil, self.banish_amt)
 
     self.dialogue_override = nil
     self.t_siner = 0
@@ -51,7 +56,7 @@ end
 
 function TitanSpawn:update()
     super.update(self)
-    if (Game.battle.state == "MENUSELECT") and (Game.tension >=  self.banish_amt) then
+    if (Game.battle.state == "MENUSELECT") and (Game.tension >= self.banish_amt) then
         self.t_siner = self.t_siner + (1 * DTMULT)
         if Game.battle.menu_items[3] then
             if Game.battle.menu_items[3].name == "Banish" then
@@ -115,7 +120,7 @@ function TitanSpawn:onTurnEnd()
 end
 
 function TitanSpawn:getEncounterText()
-    if (Game.tension >=  self.banish_amt) then
+    if (Game.tension >= self.banish_amt) then
         return "* The atmosphere feels tense...\n* (You can use [color:yellow]BANISH[color:reset]!)"
     end
     return super.getEncounterText(self)
@@ -129,7 +134,6 @@ function TitanSpawn:onShortAct(battler, name)
 end
 
 function TitanSpawn:onAct(battler, name)
-    
     if name == "Brighten" then
         battler:flash()
         Game.battle.timer:after(7 / 30, function()
@@ -235,14 +239,15 @@ function TitanSpawn:onAct(battler, name)
                 " tried to \"[color:yellow]ACT[color:reset]\"...\n* But, the enemy couldn't understand!")
         end)
         return
-
     elseif name == "Check" then
         if Game:getTension() >= self.banish_amt then
-            return {"* TITAN SPAWN - AT 30 DEF 200\n* A shard of fear. Appears in\nplaces of deep dark.", "* The atmosphere feels tense...\n* (You can use \"[color:yellow]BANISH[color:reset]\"!)"}
+            return { "* TITAN SPAWN - AT 30 DEF 200\n* A shard of fear. Appears in\nplaces of deep dark.",
+                "* The atmosphere feels tense...\n* (You can use \"[color:yellow]BANISH[color:reset]\"!)" }
         else
-            return { "* TITAN SPAWN - AT 30 DF 200\n* A shard of fear. Appears in\nplaces of deep dark.", "Expose it to LIGHT... and gather COURAGE to gain TP.", "Then, \"[color:yellow]BANISH[color:reset]\" it!" }
+            return { "* TITAN SPAWN - AT 30 DF 200\n* A shard of fear. Appears in\nplaces of deep dark.",
+                "Expose it to LIGHT... and gather COURAGE to gain TP.", "Then, \"[color:yellow]BANISH[color:reset]\" it!" }
+        end
     end
-end
     return super:onAct(self, battler, name)
 end
 
@@ -258,7 +263,7 @@ function TitanSpawn:onDefeatFatal(damage, battler)
     super.onDefeatFatal(self, damage, battler)
     Game:addFlag("slain", 1)
     if self.toggle_slain_message then
-    self:recruitMessage("slain")
+        self:recruitMessage("slain")
     end
     if self.sprite.sprite == "titanspawn_original_idle/spr_titan_spawn_idle" then
         self:setSprite("titanspawn_original_idle/spr_titan_spawn_hurt")

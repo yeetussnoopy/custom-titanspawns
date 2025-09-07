@@ -18,10 +18,6 @@ function GenericParticle:init(x, y)
     self:setColor({ 1, 77 / 255, 253 / 255 })
 end
 
-function GenericParticle:onAdd()
-Kristal.Console:log("added")
-
-end
 
 function GenericParticle:update()
     super.update(self)
