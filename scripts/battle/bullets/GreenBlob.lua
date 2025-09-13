@@ -21,6 +21,10 @@ function TPBlob:init(x, y)
 
     self.enable_tension_double = false 
     self:setScale(1, 1)
+
+    if TensionBarGlow then 
+        self.enable_new_ten = true
+    end
 end
 
 function TPBlob:onAdd(parent)
@@ -58,8 +62,14 @@ end
 function TPBlob:onCollide()
     Assets.playSound("swallow", self.size * 0.2)
     Assets.playSound("snd_eye_telegraph", self.size * 0.2, 2)
+    if self.enable_new_ten then 
+         --   Assets.playSound("face", self.size * 0.2)
+
+        Game.battle.tension_bar:flash()
+    else
     self:flashsparestars()
-    Game.battle.tension_bar:addChild(TensionBarGlow())
+    Game.battle.tension_bar:addChild(TensionBarGlowOld())
+    end
     if self.enable_tension_double and Game.battle.turn_count >= 4 then
         self.tension_amount = self.tension_amount * 2
     end
@@ -97,7 +107,7 @@ function TPBlob:flashsparestars()
         star:setOrigin(0.5, 0.5)
         local dur = 10 + love.math.random(0, 5)
 
-        star:play(5 / dur)
+        star:play( 1 / (30 * (5 / dur)))
         star.layer = 999
         star.alpha = 1
 

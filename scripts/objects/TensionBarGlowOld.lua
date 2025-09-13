@@ -1,14 +1,14 @@
----@class TensionBarGlow : Object
-local TensionBarGlow, super = Class(Object)
+---@class TensionBarGlowOld : Object
+local TensionBarGlowOld, super = Class(Object)
 
-function TensionBarGlow:init(x, y)
+function TensionBarGlowOld:init(x, y)
     super.init(self, x, y)
 
     self.apparent = Game.tension
     self.alphamod = 1
 end
 
-function TensionBarGlow:update()
+function TensionBarGlowOld:update()
     super.update(self)
 
     self.alphamod = Utils.approach(self.alphamod, 0, 0.15 * DTMULT)
@@ -17,7 +17,7 @@ function TensionBarGlow:update()
     end
 end
 
-function TensionBarGlow:draw()
+function TensionBarGlowOld:draw()
     local xx = 0
     local yy = 0
     local z = 1
@@ -64,7 +64,7 @@ function TensionBarGlow:draw()
     super.draw(self)
 end
 
-function TensionBarGlow:draw_w_offset(dx, dy, alpha)
+function TensionBarGlowOld:draw_w_offset(dx, dy, alpha)
     local xx = 0
     local yy = 0
 
@@ -81,4 +81,4 @@ function TensionBarGlow:draw_w_offset(dx, dy, alpha)
     end
 end
 
-return TensionBarGlow
+return TensionBarGlowOld
