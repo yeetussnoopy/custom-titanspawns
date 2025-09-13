@@ -29,6 +29,8 @@ function TitanSpawn:init()
         "* It sputtered in a voice like crushed glass.",
         "* Smells like adrenaline.",
         --"* There's a heart beating where your soul should be!"
+        --"* Your smile reaches your eyes."
+
     }
 
     if Game:hasPartyMember("ralsei") then
@@ -47,6 +49,9 @@ function TitanSpawn:init()
     self.tired_percentage = -1
     self.can_freeze = false
 
+    -- hacky ik but just change this index with you update the banish act to include more acts or wtv
+    self.banish_act_index = 3
+
     self.toggle_slain_message = true
 end
 
@@ -58,9 +63,9 @@ function TitanSpawn:update()
     super.update(self)
     if (Game.battle.state == "MENUSELECT") and (Game.tension >= self.banish_amt) then
         self.t_siner = self.t_siner + (1 * DTMULT)
-        if Game.battle.menu_items[3] then
-            if Game.battle.menu_items[3].name == "Banish" then
-                Game.battle.menu_items[3].color =
+        if Game.battle.menu_items[self.banish_act_index] then
+            if Game.battle.menu_items[self.banish_act_index].name == "Banish" then
+                Game.battle.menu_items[self.banish_act_index].color =
                     function()
                         return (Utils.mergeColor(COLORS.yellow, COLORS.white, 0.5 + (math.sin(self.t_siner / 4) * 0.5)))
                     end
@@ -161,8 +166,7 @@ function TitanSpawn:onAct(battler, name)
             cutscene:text("* " .. battler.chara:getName() .. "'s SOUL emitted a brilliant light!")
             battler:flash()
             cutscene:playSound("revival")
-
-            cutscene:playSound("snd_great_shine", 1, 1.2)
+            cutscene:playSound("snd_great_shine", 1, 0.8)
 
             local bx, by = Game.battle:getSoulLocation()
 
@@ -203,10 +207,10 @@ function TitanSpawn:onAct(battler, name)
                 cutscene:wait(1 / step / 45)
             end
 
-            cutscene:wait(50 / 30)
+            cutscene:wait(30 / 30)
 
             -- soul:remove()
-            fade(0.04, { 1, 1, 1 })
+            fade(0.06, { 1, 1, 1 })
             for _, enemy in ipairs(Game.battle.enemies) do
                 enemy.alpha = 0
             end

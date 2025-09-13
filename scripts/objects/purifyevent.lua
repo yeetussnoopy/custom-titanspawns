@@ -21,8 +21,8 @@ function PurifyEvent:draw()
 
 
 
-    self.siner = self.siner + 1.5 * DTMULT
-    self.t = self.t + 1 * DTMULT
+    self.siner = self.siner + 2.5 * DTMULT
+    self.t = self.t + 1.5 * DTMULT
 
 
     local r, g, b, a = self:getDrawColor()
