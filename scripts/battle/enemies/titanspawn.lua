@@ -53,6 +53,9 @@ function TitanSpawn:init()
     self.banish_act_index = 3
 
     self.toggle_slain_message = true
+
+    self.slapped_shitck = false
+    self.count_down = 0
 end
 
 function TitanSpawn:getGrazeTension()
@@ -61,6 +64,25 @@ end
 
 function TitanSpawn:update()
     super.update(self)
+
+     if self.count_down > 1 then
+        self.count_down = self.count_down - (1 * DTMULT)
+        local d = self.sprite:addFX(ShaderFX("wave", {
+            ["wave_sine"] = function () return Kristal.getTime() * 30 end,
+            ["wave_mag"] = self.count_down,
+            ["wave_height"] = self.count_down,
+            ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
+        }), "wave")
+        Game.battle.timer:after(0.05, function()
+            self.sprite:removeFX("wave")
+        end)
+
+        if self.count_down <= 1 then
+            self.count_down = 1
+        end
+    end
+
+
     if (Game.battle.state == "MENUSELECT") and (Game.tension >= self.banish_amt) then
         self.t_siner = self.t_siner + (1 * DTMULT)
         if Game.battle.menu_items[self.banish_act_index] then
@@ -98,6 +120,9 @@ function TitanSpawn:onHurt(damage, battler)
 
     Assets.playSound("snd_spawn_weaker")
 
+    if self.slapped_shitck then
+        self.count_down = 30
+    else
 
     self.sprite:addFX(ShaderFX("wave", {
         ["wave_sine"] = function() return Kristal.getTime() * 30 end,
@@ -118,6 +143,7 @@ function TitanSpawn:onHurt(damage, battler)
         self.sprite:removeFX("wave")
         self.sprite:removeFX("wave")
     end)
+end
 end
 
 function TitanSpawn:onTurnEnd()

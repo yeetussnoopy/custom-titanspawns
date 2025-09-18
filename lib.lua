@@ -1,19 +1,12 @@
 local lib = {}
 
 function lib:init()
-
---[[     Utils.hook(PartyBattler, "hurt", function(orig, self,amount, exact, target, swoon, options)
-        Kristal.Console:log("hooked")
-        orig(self, amount, exact, target, swoon, options)
-    end)
-
-
    Utils.hook(PartyBattler, "hurt", function(orig, self, amount, exact, color, options)
-        if self.chara:checkArmor("shadowmantle") and options["dark_bullet"] then
-            amount = amount * 0.66
+        if self.chara:checkArmor("shadowmantle") and Game.battle.encounter.toggle_shadow_mantle_all_bullets then
+            amount = amount * 0.5
         end
         orig(self, amount, exact, color, options)
-    end)]]
+    end)
 end
 
 function lib:postInit(new_file)
