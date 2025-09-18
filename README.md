@@ -10,6 +10,8 @@ Autumn64: Mine Sprites/Bug Testing
 Simbel & DobbyLiu: Fountain Recreation
 https://github.com/darkplace-dr/Dark-Place/blob/c89c553ebcaad44738c9d5373b1b583ff2df79ed/scripts/world/cutscenes/fountain1.lua#L4
 
+HMMNo: TitanDarknessController Recreation: https://discord.com/channels/899153719248191538/1414016538461208607/1414090555230523392
+
 Toby Fox/Temmie Chang: Sprites
 
 ## Features

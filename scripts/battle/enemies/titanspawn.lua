@@ -239,6 +239,9 @@ function TitanSpawn:onAct(battler, name)
 
             -- soul:remove()
             fade(0.06, { 1, 1, 1 })
+            if Game.battle.encounter.toggle_smoke then
+                Game.battle.encounter.darkness_controller:remove()
+            end
             for _, enemy in ipairs(Game.battle.enemies) do
                 enemy.alpha = 0
             end
