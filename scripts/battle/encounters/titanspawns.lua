@@ -23,6 +23,7 @@ function Encounter:init()
     --makes all bullets in the encounter considered for shadowmantle prevention
     self.toggle_shadow_mantle_all_bullets = true
 
+    self.banish_goal = 64
 
     self.reduced_tension= true
 
