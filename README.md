@@ -33,6 +33,7 @@ Toby Fox/Temmie Chang: Sprites
 - GenericParticle ported in
 - extremely hacky shadowmantle (makes all bullets for the encounter register as shadowmantle blocked)
 - custom hurt anims
+- goal bar like in the boards
 
 ## Things I won't add
 - Reviver Acts

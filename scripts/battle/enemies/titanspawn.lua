@@ -56,7 +56,7 @@ function TitanSpawn:init()
 
 
     -- alternate slapped_shitck annimssssss
-    self.slapped_shitck = true
+    self.slapped_shitck = false
     self.count_down = 0
 end
 
