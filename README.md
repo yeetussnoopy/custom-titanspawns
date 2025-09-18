@@ -31,7 +31,8 @@ Toby Fox/Temmie Chang: Sprites
 - TP Bar Flash/Sparkles
 - Various graphical effects 
 - GenericParticle ported in
-  
+- extremely hacky shadowmantle (makes all bullets for the encounter register as shadowmantle blocked)
+- custom hurt anims
+
 ## Things I won't add
 - Reviver Acts
-- Shadow Mantle Damage Reduction 

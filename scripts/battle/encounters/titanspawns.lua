@@ -18,6 +18,9 @@ function Encounter:init()
     self.light_size = 48
     self.purified = false
 
+
+
+    --makes all bullets in the encounter considered for shadowmantle prevention
     self.toggle_shadow_mantle_all_bullets = true
 
 

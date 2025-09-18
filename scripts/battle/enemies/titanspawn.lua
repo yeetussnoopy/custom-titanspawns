@@ -54,6 +54,8 @@ function TitanSpawn:init()
 
     self.toggle_slain_message = true
 
+
+    -- alternate slapped_shitck annimssssss
     self.slapped_shitck = false
     self.count_down = 0
 end
