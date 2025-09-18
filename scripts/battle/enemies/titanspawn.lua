@@ -56,7 +56,7 @@ function TitanSpawn:init()
 
 
     -- alternate slapped_shitck annimssssss
-    self.slapped_shitck = false
+    self.slapped_shitck = true
     self.count_down = 0
 end
 
@@ -67,10 +67,10 @@ end
 function TitanSpawn:update()
     super.update(self)
 
-     if self.count_down > 1 then
+    if self.count_down > 1 then
         self.count_down = self.count_down - (1 * DTMULT)
         local d = self.sprite:addFX(ShaderFX("wave", {
-            ["wave_sine"] = function () return Kristal.getTime() * 30 end,
+            ["wave_sine"] = function() return Kristal.getTime() * 30 end,
             ["wave_mag"] = self.count_down,
             ["wave_height"] = self.count_down,
             ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
@@ -125,27 +125,26 @@ function TitanSpawn:onHurt(damage, battler)
     if self.slapped_shitck then
         self.count_down = 30
     else
+        self.sprite:addFX(ShaderFX("wave", {
+            ["wave_sine"] = function() return Kristal.getTime() * 30 end,
+            ["wave_mag"] = 2,
+            ["wave_height"] = 0.7,
+            ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
+        }), "wave")
 
-    self.sprite:addFX(ShaderFX("wave", {
-        ["wave_sine"] = function() return Kristal.getTime() * 30 end,
-        ["wave_mag"] = 2,
-        ["wave_height"] = 0.7,
-        ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
-    }), "wave")
 
+        self.sprite:addFX(ShaderFX("wave", {
+            ["wave_sine"] = function() return Kristal.getTime() * 30 end,
+            ["wave_mag"] = 1,
+            ["wave_height"] = 2,
+            ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
+        }), "wave")
 
-    self.sprite:addFX(ShaderFX("wave", {
-        ["wave_sine"] = function() return Kristal.getTime() * 30 end,
-        ["wave_mag"] = 1,
-        ["wave_height"] = 2,
-        ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
-    }), "wave")
-
-    Game.battle.timer:after(1.2, function()
-        self.sprite:removeFX("wave")
-        self.sprite:removeFX("wave")
-    end)
-end
+        Game.battle.timer:after(1.2, function()
+            self.sprite:removeFX("wave")
+            self.sprite:removeFX("wave")
+        end)
+    end
 end
 
 function TitanSpawn:onTurnEnd()
@@ -296,6 +295,7 @@ end
 
 function TitanSpawn:onDefeatFatal(damage, battler)
     super.onDefeatFatal(self, damage, battler)
+
     Game:addFlag("slain", 1)
     if self.toggle_slain_message then
         self:recruitMessage("slain")

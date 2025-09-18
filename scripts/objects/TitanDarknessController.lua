@@ -1,16 +1,14 @@
 local TitanDarknessController, super = Class(Object)
 
-function TitanDarknessController:init(data)
+function TitanDarknessController:init()
     super.init(self)
     self:setPosition(0, 0)
-    self:setLayer(BATTLE_LAYERS["bottom"])
+    self.layer= 999
     self.timer = 0
     self.spawn_speed = 7
     self.spawn_timer = self.spawn_speed
 
     self.alpha_gain = 0
-
-
 
     self.fumes = {}
     self:addFX(ShaderFX('pixelate', {
@@ -45,7 +43,7 @@ end
 
 function TitanDarknessController:update()
     super.update(self)
-    self:setLayer(WORLD_LAYERS["bottom"])
+    self:setLayer(BATTLE_LAYERS["bottom"])
     self.timer = self.timer + DTMULT
     self.spawn_timer = self.spawn_timer - DTMULT
 

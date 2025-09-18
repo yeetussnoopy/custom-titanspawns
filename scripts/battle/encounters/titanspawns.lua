@@ -42,9 +42,10 @@ end
 
 function Encounter:beforeStateChange(old, new)
     if self.toggle_smoke then
-    if old == "INTRO" then
+    if old == "INTRO" and not self.darkness_controller  then
         Game.battle.timer:after(1, function ()
-        self.darkness_controller =  Game.battle:addChild(TitanDarknessController())
+        self.darkness_controller = Game.battle:addChild(TitanDarknessController())
+        self.darkness_controller.layer = Game.battle.party[1].layer - 1
         end)
     end
 end
