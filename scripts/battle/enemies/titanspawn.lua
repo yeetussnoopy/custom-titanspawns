@@ -52,8 +52,9 @@ function TitanSpawn:init()
     -- hacky ik but just change this index with you update the banish act to include more acts or wtv
     self.banish_act_index = 3
 
-    self.toggle_slain_message = true
 
+    --custom slain message made for on KILL
+    self.toggle_slain_message = true
 
     -- alternate slapped_shitck annimssssss
     self.slapped_shitck = true
@@ -238,6 +239,8 @@ function TitanSpawn:onAct(battler, name)
 
             -- soul:remove()
             fade(0.06, { 1, 1, 1 })
+
+
             if Game.battle.encounter.toggle_smoke then
                 Game.battle.encounter.darkness_controller:remove()
             end
@@ -295,7 +298,9 @@ end
 
 function TitanSpawn:onDefeatFatal(damage, battler)
     super.onDefeatFatal(self, damage, battler)
-
+    if Game.battle.encounter.toggle_smoke then
+        Game.battle.encounter.darkness_controller.toggle_lessen = true
+    end
     Game:addFlag("slain", 1)
     if self.toggle_slain_message then
         self:recruitMessage("slain")

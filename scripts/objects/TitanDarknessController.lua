@@ -39,6 +39,11 @@ function TitanDarknessController:init()
             { 655, -5 + i * 25, Utils.random(20, 40), self.timer +
             Utils.random(-30, 30), false })
     end
+
+
+    self.allow_weaken_fight = false
+    self.toggle_lessen = false
+    self.total_enemies = 0
 end
 
 function TitanDarknessController:update()
@@ -47,8 +52,11 @@ function TitanDarknessController:update()
     self.timer = self.timer + DTMULT
     self.spawn_timer = self.spawn_timer - DTMULT
 
+    if self.toggle_lessen and self.allow_weaken_fight then
+        self.alpha_gain = Utils.approach(self.alpha_gain, #Game.battle.encounter:getDefeatedEnemies()/self.total_enemies, 0.06* DTMULT)
+    else
     self.alpha_gain = self.alpha_gain + (0.03* DTMULT)
-
+    end
 
     if self.spawn_timer < 0 then
         self.spawn_timer = self.spawn_timer + self.spawn_speed

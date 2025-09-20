@@ -24,13 +24,15 @@ function Encounter:init()
     --makes all bullets in the encounter considered for shadowmantle prevention
     self.toggle_shadow_mantle_all_bullets = true
 
+    --set to nil for no displayable banish goal on the TP bar
     self.banish_goal = 64
 
     self.reduced_tension = true
 
     self.difficulty = 1
 
-    self.toggle_smoke = true
+    --toggle smoke effect around the border
+    self.toggle_smoke = false
 
     self.darkness_controller = nil
 
@@ -45,7 +47,8 @@ function Encounter:beforeStateChange(old, new)
     if old == "INTRO" and not self.darkness_controller  then
         Game.battle.timer:after(1, function ()
         self.darkness_controller = Game.battle:addChild(TitanDarknessController())
-        self.darkness_controller.layer = Game.battle.party[1].layer - 1
+        self.darkness_controller.total_enemies = #Game.battle:getActiveEnemies()
+
         end)
     end
 end
