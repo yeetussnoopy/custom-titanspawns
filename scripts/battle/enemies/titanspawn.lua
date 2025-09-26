@@ -7,7 +7,7 @@ function TitanSpawn:init()
     self:setActor("titanspawn")
 
     self.max_health = 3000
-    self.health = 1
+    self.health = 3000
     self.attack = 18
     self.defense = 0
     self.money = 0
