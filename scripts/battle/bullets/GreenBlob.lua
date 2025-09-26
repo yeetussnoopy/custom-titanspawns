@@ -25,6 +25,7 @@ function TPBlob:init(x, y)
     if TensionBarGlow then 
         self.enable_new_ten = true
     end
+    
 end
 
 function TPBlob:onAdd(parent)

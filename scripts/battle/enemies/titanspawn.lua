@@ -7,7 +7,7 @@ function TitanSpawn:init()
     self:setActor("titanspawn")
 
     self.max_health = 3000
-    self.health = 3000
+    self.health = 1
     self.attack = 18
     self.defense = 0
     self.money = 0
@@ -57,7 +57,7 @@ function TitanSpawn:init()
     self.toggle_slain_message = true
 
     -- alternate slapped_shitck annimssssss
-    self.slapped_shitck = true
+    self.slapped_shitck = false
     self.count_down = 0
 end
 

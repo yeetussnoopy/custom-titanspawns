@@ -32,10 +32,9 @@ function Encounter:init()
     self.difficulty = 1
 
     --toggle smoke effect around the border
-    self.toggle_smoke = false
+    self.toggle_smoke = true
 
     self.darkness_controller = nil
-
 end
 
 function Encounter:onTurnEnd()
@@ -44,17 +43,20 @@ end
 
 function Encounter:beforeStateChange(old, new)
     if self.toggle_smoke then
-    if old == "INTRO" and not self.darkness_controller  then
-        Game.battle.timer:after(1, function ()
-        self.darkness_controller = Game.battle:addChild(TitanDarknessController())
-        self.darkness_controller.total_enemies = #Game.battle:getActiveEnemies()
-
-        end)
+        if old == "INTRO" and not self.darkness_controller then
+            Game.battle.timer:after(1, function()
+                self.darkness_controller = Game.battle:addChild(TitanDarknessController())
+                self.darkness_controller.total_enemies = #Game.battle:getActiveEnemies()
+            end)
+        end
     end
-end
     if (new == "DEFENDING" or old == "CUTSCENE") and self.purified then
         -- self:explode()
         Game.battle:setState("VICTORY")
+    end
+
+    if new == "VICTORY" and self.darkness_controller then
+        self.darkness_controller.toggle_weaken = true
     end
 end
 
