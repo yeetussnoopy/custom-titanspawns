@@ -55,9 +55,12 @@ function Encounter:beforeStateChange(old, new)
         Game.battle:setState("VICTORY")
     end
 
-    if new == "VICTORY" and self.darkness_controller then
-        self.darkness_controller.toggle_weaken = true
-    end
 end
 
+function Encounter:onStateChange(old, new)
+     if new == "VICTORY" and self.darkness_controller and Game.battle.used_violence then
+      self.darkness_controller.toggle_lessen = true
+      Kristal.Console:log("dsfdsf")
+    end
+end
 return Encounter

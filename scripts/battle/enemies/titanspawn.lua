@@ -298,9 +298,7 @@ end
 
 function TitanSpawn:onDefeatFatal(damage, battler)
     super.onDefeatFatal(self, damage, battler)
-    if Game.battle.encounter.toggle_smoke then
-        Game.battle.encounter.darkness_controller.toggle_lessen = true
-    end
+    
     Game:addFlag("slain", 1)
     if self.toggle_slain_message then
         self:recruitMessage("slain")
