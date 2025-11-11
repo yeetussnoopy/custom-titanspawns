@@ -50,17 +50,17 @@ function Encounter:beforeStateChange(old, new)
             end)
         end
     end
-    if (new == "DEFENDING" or old == "CUTSCENE") and self.purified then
-        -- self:explode()
-        Game.battle:setState("VICTORY")
-    end
 
+     if new == "VICTORY" and self.darkness_controller and Game.battle.used_violence then
+      self.darkness_controller.toggle_lessen = true
+    end
 end
 
 function Encounter:onStateChange(old, new)
-     if new == "VICTORY" and self.darkness_controller and Game.battle.used_violence then
-      self.darkness_controller.toggle_lessen = true
-      Kristal.Console:log("dsfdsf")
+
+      if (new == "DEFENDING" or old == "CUTSCENE") and self.purified then
+        -- self:explode()
+        Game.battle:setState("VICTORY")
     end
 end
 return Encounter

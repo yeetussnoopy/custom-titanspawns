@@ -177,9 +177,9 @@ function TitanSpawn:onAct(battler, name)
                 chara:flash()
             end
             local bx, by = Game.battle:getSoulLocation()
-            local soul = Sprite("effects/soulshine", bx, by)
+            local soul = Sprite("effects/soulshine", bx + 5.5, by)
             soul:play(1 / 30, false, function() soul:remove() end)
-            soul:setOrigin(0.25, 0.25)
+            soul:setOrigin(0.5)
             soul:setScale(2, 2)
             Game.battle:addChild(soul)
         end)
@@ -198,7 +198,7 @@ function TitanSpawn:onAct(battler, name)
 
             local bx, by = Game.battle:getSoulLocation()
 
-            local soul = Game.battle:addChild(purifyevent(bx + 20, by + 10))
+            local soul = Game.battle:addChild(purifyevent(bx + 5.5, by))
             soul.color = Game:getPartyMember(Game.party[1].id).soul_color or { 1, 0, 0 }
             soul.layer = 501
             --  soul.graphics.fade = 0.20
@@ -209,7 +209,7 @@ function TitanSpawn:onAct(battler, name)
             local flash_part_grow_factor = 0.5
             for i = 1, flash_part_total - 1 do
                 -- width is 1px for better scaling
-                local part = Rectangle(bx + 20, 0, 1, SCREEN_HEIGHT)
+                local part = Rectangle(bx  + 5.5, 0, 1, SCREEN_HEIGHT)
                 part:setOrigin(0.5, 0)
                 part.layer = soul.layer - i
                 part:setColor(1, 1, 1, -(i / flash_part_total))
@@ -298,7 +298,7 @@ end
 
 function TitanSpawn:onDefeatFatal(damage, battler)
     super.onDefeatFatal(self, damage, battler)
-    
+
     Game:addFlag("slain", 1)
     if self.toggle_slain_message then
         self:recruitMessage("slain")
